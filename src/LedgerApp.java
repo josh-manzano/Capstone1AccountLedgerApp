@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.FileWriter;
@@ -8,13 +11,13 @@ import java.util.Scanner;
 
 public class LedgerApp {
     static List<UserTransactions> allUserTransactions = new ArrayList<>();
-    public static void main(String[] args){
+    public static void main(String[] args)throws IOException{
         Scanner input = new Scanner(System.in);
         System.out.println("-------------------Welcome to the Account Ledger App-------------------");
         mainMenu(input);
     }
 
-    public static void mainMenu(Scanner input){
+    public static void mainMenu(Scanner input)throws IOException{
         //app is in action
         boolean running = true;
 
@@ -108,8 +111,6 @@ public class LedgerApp {
         }
     }
 
-
-
     //allows the user to submit a payment
     public static void makePayment(Scanner input) {
         boolean makingPayment = true;
@@ -166,10 +167,111 @@ public class LedgerApp {
             }
         }
     }
+
     //opens the ledger
-    public static void openLedger(Scanner input) {
+    public static void openLedger(Scanner input) throws IOException{
+        //starts running ledger
+        boolean ledging = true;
+
+        while (ledging) {
+            //Main Menu options
+            System.out.println("Select an option below; type the corresponding letter");
+            System.out.println("(A) All");
+            System.out.println("(D) Deposits");
+            System.out.println("(P) Payments");
+            System.out.println("(R) Reports");
+            System.out.println("(H) Home");
+
+            //asks user to type an option they'd like to use
+            String userChoice = input.nextLine().trim();
+
+            switch (userChoice.toLowerCase()) {
+                case "a":
+                    allTransactions(input);
+                    break;
+                case "d":
+                    getAllDeposits();
+                    break;
+                case "p":
+                    viewPayments();
+                    break;
+                case "r":
+                    reportsPage();
+                    break;
+                case "h":
+                    System.out.println("Returning to main menu...\n");
+                    ledging = false;
+                    break;
+                default: //asks user to try again if input is invalid
+                    System.out.println("Try Again");
+                    return;
+            }
+        }
     }
 
+    //displays all transactions
+    public static void allTransactions(Scanner input) throws IOException{
+        loadFile();
+        System.out.println("All transactions:");
+        for (UserTransactions transactions : allUserTransactions){
+            if (transactions != null){
+                System.out.println("\n" + transactions);
+            }
+        }
+        boolean readingTransactions = true;
+
+
+        while (readingTransactions) {
+            System.out.println("\nEnter (H) for Main Menu");
+            String home = input.nextLine().trim();
+
+
+            if (home.equalsIgnoreCase("h")) {
+                System.out.println("Loading Ledger...\n");
+                readingTransactions = false;
+            } else {
+                System.out.println("Invalid input—press H to return.");
+            }
+        }
+
+    }
+
+    public static void getAllDeposits(){
+
+    }
+
+    public static void viewPayments(){
+
+    }
+
+    public static void reportsPage(){
+
+    }
+
+    //loads all transactions in from transactions.csv to allUserTransactions list
+    public static void loadFile()throws IOException{
+        DateTimeFormatter dFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        DateTimeFormatter tFormat = DateTimeFormatter.ofPattern("hh:mm a");
+        allUserTransactions.clear();
+        BufferedReader reader = new BufferedReader(
+                new FileReader("C:\\Users\\manzo\\pluralsight\\Learn_to_Code_Capstones\\AccountLedgerApp\\src\\transactions.csv"));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.trim().isEmpty()) continue;
+            String[] parts = line.split("\\|");
+            // parse each part:
+            LocalDate date = LocalDate.parse(parts[0],dFormat);
+            LocalTime time = LocalTime.parse(parts[1],tFormat);
+            String desc = parts[2];
+            String vendor = parts[3];
+            double amt = Double.parseDouble(parts[4]);
+            UserTransactions transactions = new UserTransactions(date, time, desc, vendor, amt);
+            allUserTransactions.addFirst(transactions);  // newest‐first
+        }
+        reader.close();
+    }
+
+    //gets all user input from methods and writes it into transaction.csv
     public static void writeTransactions(LocalDate purchaseDate, LocalTime purchaseTime, String description, String vendor, double amount) throws IOException {
         FileWriter writer = new FileWriter("C:\\Users\\manzo\\pluralsight\\Learn_to_Code_Capstones\\AccountLedgerApp\\src\\transactions.csv", true);
         UserTransactions newTransaction = new UserTransactions(purchaseDate, purchaseTime, description, vendor, amount);
