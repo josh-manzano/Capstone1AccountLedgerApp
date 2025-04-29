@@ -196,7 +196,7 @@ public class LedgerApp {
                     viewPayments();
                     break;
                 case "r":
-                    reportsPage();
+                    reportsPage(input);
                     break;
                 case "h":
                     System.out.println("Returning to main menu...\n");
@@ -236,16 +236,77 @@ public class LedgerApp {
 
     }
 
-    public static void getAllDeposits(){
+    public static void getAllDeposits()throws IOException{
+        loadFile();
+        System.out.println("All deposits");
+        for (UserTransactions transactions : allUserTransactions) {
+            if (transactions.getAmount() > 0) {
+                System.out.println("\n" + transactions + "\n");
+            }
+        }
 
     }
 
-    public static void viewPayments(){
+    public static void viewPayments()throws IOException{
+        loadFile();
+        System.out.println("All Payments");
+        for (UserTransactions transactions : allUserTransactions) {
+            if (transactions.getAmount() < 0) {
+                System.out.println("\n" + transactions + "\n");
+            }
+        }
+    }
+
+    public static void reportsPage(Scanner input){
+        boolean reportsRunning = true;
+        while (reportsRunning) {
+            System.out.println("\nReports Page \nSearch reports by filter:");
+            System.out.println("(1) Month to Date");
+            System.out.println("(2) Previous Month");
+            System.out.println("(3) Year to Date");
+            System.out.println("(4) Previous Year");
+            System.out.println("(5) Search by Vendor");
+            System.out.println("(0) Back");
+            String userChoice = input.nextLine().trim();
+
+
+            switch (userChoice) {
+                case "1":
+                    monthToDate();
+                    break;
+                case "2":
+                    previousMonth();
+                    break;
+                case "3":
+                    yearToDate();
+                    break;
+                case "4":
+                    previousYear();
+                    break;
+                case "5":
+                    searchByVendor();
+                case "0":
+                    reportsRunning = false;
+                default:
+                    System.out.println("Invalid, try again");
+            }
+        }
 
     }
 
-    public static void reportsPage(){
+    public static void monthToDate(){
+    }
 
+    public static void previousMonth(){
+    }
+
+    public static void yearToDate(){
+    }
+
+    public static void previousYear(){
+    }
+
+    public static void searchByVendor(){
     }
 
     //loads all transactions in from transactions.csv to allUserTransactions list
