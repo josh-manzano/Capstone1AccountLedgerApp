@@ -257,7 +257,7 @@ public class LedgerApp {
         }
     }
 
-    public static void reportsPage(Scanner input){
+    public static void reportsPage(Scanner input)throws IOException{
         boolean reportsRunning = true;
         while (reportsRunning) {
             System.out.println("\nReports Page \nSearch reports by filter:");
@@ -294,7 +294,22 @@ public class LedgerApp {
 
     }
 
-    public static void monthToDate(){
+    public static void monthToDate()throws IOException{
+        loadFile();
+
+
+        LocalDate today = LocalDate.now();
+        LocalDate firstOfMonth = today.withDayOfMonth(1);
+        LocalDate tmw = today.plusDays(1);
+
+
+        for (UserTransactions transactions : allUserTransactions){
+            LocalDate date = transactions.getPurchaseDate();
+            if (date.isAfter(firstOfMonth) && date.isBefore(tmw)){
+                System.out.println("\n" + transactions + "\n");
+            }
+        }
+
     }
 
     public static void previousMonth(){
