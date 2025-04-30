@@ -16,7 +16,7 @@ public class LedgerApp {
         System.out.println("-------------------Welcome to the Account Ledger App-------------------");
         mainMenu(input);
     }
-
+    // keeps code running while its true also allows user to select methods
     public static void mainMenu(Scanner input)throws IOException{
         //app is in action
         boolean running = true;
@@ -236,6 +236,7 @@ public class LedgerApp {
 
     }
 
+    //displays deposits only
     public static void getAllDeposits()throws IOException{
         loadFile();
         System.out.println("All deposits");
@@ -247,6 +248,7 @@ public class LedgerApp {
 
     }
 
+    //displays payments only
     public static void viewPayments()throws IOException{
         loadFile();
         System.out.println("All Payments");
@@ -257,6 +259,7 @@ public class LedgerApp {
         }
     }
 
+    //opens reports menu and leaves it running until user goes to ledger and also displays different methods
     public static void reportsPage(Scanner input)throws IOException{
         boolean reportsRunning = true;
         while (reportsRunning) {
@@ -294,6 +297,7 @@ public class LedgerApp {
 
     }
 
+    //displays transactions made from start current month to current date
     public static void monthToDate()throws IOException{
         loadFile();
 
@@ -312,13 +316,63 @@ public class LedgerApp {
 
     }
 
-    public static void previousMonth(){
+    //displays all transactions from previous month from day one to end of month
+    public static void previousMonth()throws IOException{
+        loadFile();
+
+
+        LocalDate today = LocalDate.now();
+        int prevMonth = today.minusMonths(1).getMonthValue();
+        int prevMonthInYear = today.minusMonths(1).getYear();
+
+
+        System.out.println("\nTransactions from Previous Month:\n");
+        for (UserTransactions transactions : allUserTransactions) {
+            LocalDate date = transactions.getPurchaseDate();
+            if (date.getYear() == prevMonthInYear && date.getMonthValue() == prevMonth) {
+                System.out.println(transactions + "\n");
+            }
+        }
+
     }
 
-    public static void yearToDate(){
+    // displays transactions made from beginning of current year to current date
+    public static void yearToDate()throws IOException{
+        loadFile();
+
+
+        LocalDate today = LocalDate.now();
+        LocalDate firstMOfYear = today.withMonth(1);
+        LocalDate tmw = today.plusDays(1);
+
+
+        for (UserTransactions transactions : allUserTransactions){
+            LocalDate date = transactions.getPurchaseDate();
+            if (date.isAfter(firstMOfYear) && date.isBefore(tmw)){
+                System.out.println("\n" + transactions + "\n");
+            }
+        }
+
     }
 
-    public static void previousYear(){
+    //displays all transactions from the previous year from first day of year to last day of the year
+    public static void previousYear()throws IOException{
+        loadFile();
+
+
+        LocalDate today = LocalDate.now();
+        LocalDate prevYear = today.minusYears(1).withMonth(1).withDayOfMonth(1);
+        int allDays = prevYear.lengthOfYear();
+        LocalDate lastDay = prevYear.withDayOfYear(allDays);
+
+
+        for(UserTransactions transactions : allUserTransactions){
+            LocalDate date = transactions.getPurchaseDate();
+            if (date.isAfter(prevYear) && date.isBefore(lastDay)){
+                System.out.println("\n" + transactions + "\n");
+            }
+        }
+
     }
 
     public static void searchByVendor(){
