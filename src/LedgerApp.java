@@ -287,7 +287,7 @@ public class LedgerApp {
                     previousYear();
                     break;
                 case "5":
-                    searchByVendor();
+                    searchByVendor(input);
                 case "0":
                     reportsRunning = false;
                 default:
@@ -375,7 +375,32 @@ public class LedgerApp {
 
     }
 
-    public static void searchByVendor(){
+    //displays the transaction connected to the vendor that the user inputs
+    public static void searchByVendor(Scanner input)throws IOException{
+        loadFile();
+        boolean searching = true;
+
+
+        while(searching){
+            System.out.println("Type in Account or Vendor name: ");
+            String vendorName = input.nextLine().trim();
+            for (UserTransactions transactions : allUserTransactions){
+                if (transactions.getVendor().equalsIgnoreCase(vendorName)){
+                    System.out.println("\n" + transactions);
+                }
+            }
+            System.out.println("\nEnter (H) for Main Menu or Enter any key to continue searching");
+            String home = input.nextLine().trim();
+
+
+            if (home.equalsIgnoreCase("h")) {
+                System.out.println("Loading Ledger...\n");
+                searching = false;
+            } else {
+                searching = true;
+            }
+        }
+
     }
 
     //loads all transactions in from transactions.csv to allUserTransactions list

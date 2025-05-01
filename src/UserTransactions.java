@@ -28,7 +28,14 @@ public class UserTransactions {
 
         return dateFormat.format(purchaseDate) + "|" + timeFormat.format(purchaseTime) + "|" + description + "|" + vendor + "| " + String.format("%.2f", amount);
     }
+
     public double getAmount() {
         return amount;
+    }
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+    public String getVendor(){
+        return vendor;
     }
 }
