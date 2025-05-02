@@ -11,13 +11,13 @@ import java.util.Scanner;
 
 public class LedgerApp {
     static List<UserTransactions> allUserTransactions = new ArrayList<>();
-    public static void main(String[] args)throws IOException{
+    public static void main(String[] args){
         Scanner input = new Scanner(System.in);
         System.out.println("-------------------Welcome to the Account Ledger App-------------------");
         mainMenu(input);
     }
     // keeps code running while its true also allows user to select methods
-    public static void mainMenu(Scanner input)throws IOException{
+    public static void mainMenu(Scanner input){
         //app is in action
         boolean running = true;
 
@@ -57,13 +57,10 @@ public class LedgerApp {
     public static void addDeposit(Scanner input){
         boolean depositRunning = true;
 
-
         while (depositRunning) {
-
 
             System.out.println("Would you like to deposit?\nChoose: (Y) Continue or (N) Go back to main menu");
             String yOrN = input.nextLine().trim();
-
 
             //asks user if they want to deposit or not
             switch (yOrN.toLowerCase()) {
@@ -78,9 +75,6 @@ public class LedgerApp {
                     input.nextLine();
                     System.out.println("\nYou are about to deposit $" + String.format("%.2f", depositAmount) + " using " + paymentMethod + "\nChoose: (Y) Continue or (N) Cancel");
                     String yOrNToDeposit = input.nextLine().trim();
-
-
-
 
                     //asks user if they want to continue the deposit or cancel
                     switch (yOrNToDeposit.toLowerCase()) {
@@ -113,63 +107,55 @@ public class LedgerApp {
 
     //allows the user to submit a payment
     public static void makePayment(Scanner input) {
-        boolean makingPayment = true;
+        boolean running = true;
 
-
-        while (makingPayment) {
+        while (running) {
             System.out.println("Would you like to make a payment?");
             System.out.println("Choose: (Y) Continue or (N) Go back to main menu");
-            String yOrN = input.nextLine().trim();
+            String yOrN = input.nextLine().trim().toLowerCase();
 
-            //asks user if they want to make a payment or not
-            switch (yOrN.toLowerCase()) {
-                case "y":
+            if (yOrN.equals("y")) {
+                // Get all needed info at once
+                System.out.println("Who will you be paying today? (e.g. Walmart, Amazon)");
+                String vendor = input.nextLine();
 
-                    //asking who they are paying and how much
-                    System.out.println("Who will you be paying today? \nex: Walmart, Target, Amazon, Chevron");
-                    String vendor = input.nextLine();
-                    System.out.println("What will you be purchasing?");
-                    String paymentMethod = input.nextLine();
-                    System.out.println("Enter amount being sent:");
-                    double paymentAmount = input.nextDouble();
-                    input.nextLine();
+                System.out.println("What will you be purchasing?");
+                String description = input.nextLine();
 
-                    System.out.println("You are about to make a payment of $" + String.format("%.2f", paymentAmount) + " to " + vendor + "\nChoose: (Y) Continue or (N) Cancel");
-                    String yOrNToPayment = input.nextLine().trim();
+                System.out.println("Enter the amount:");
+                double amount = input.nextDouble();
+                input.nextLine(); // clear scanner buffer
 
-                    //asks user if they want to continue the payment or cancel
-                    switch (yOrNToPayment.toLowerCase()) {
-                        case "y":
+                // Confirm
+                System.out.println("Confirm payment of $" + String.format("%.2f", amount) + " to " + vendor + "? (Y/N)");
+                String confirm = input.nextLine().trim().toLowerCase();
 
-                            System.out.println("You paid " + vendor + " $" + String.format("%.2f", paymentAmount) + ".\nReturning to the main menu \n");
-                            double negativeAmount = paymentAmount * -1;
-                            try {
-                                writeTransactions(LocalDate.now(), LocalTime.now(), paymentMethod, vendor, negativeAmount);
-                            } catch (IOException e) {
-                                System.out.println("Transaction failed, Please try again.");
-                            }
-                            makingPayment = false;
-                            break;
-                        case "n":
-                            System.out.println("Payment has been canceled \n");
-                            makingPayment = false;
-                            break;
-                        default:
-                            System.out.println("Invalid try again \n");
+                if (confirm.equals("y")) {
+                    try {
+                        writeTransactions(LocalDate.now(), LocalTime.now(), description, vendor, amount * -1);
+                        System.out.println("Payment successful.\nReturning to main menu...\n");
+                    } catch (IOException e) {
+                        System.out.println("Failed to write transaction.");
                     }
-                    break;
-                case "n":
-                    System.out.println("Payment has been canceled \nReturning to the main menu ...\n");
-                    makingPayment = false;
-                    break;
-                default:
-                    System.out.println("Invalid try again \n");
+                } else {
+                    System.out.println("Payment canceled.\n");
+                }
+                running = false; // exit loop
+            }
+
+            else if (yOrN.equals("n")) {
+                System.out.println("Returning to main menu...\n");
+                running = false;
+            }
+
+            else {
+                System.out.println("Invalid input. Please try again.\n");
             }
         }
     }
 
     //opens the ledger
-    public static void openLedger(Scanner input) throws IOException{
+    public static void openLedger(Scanner input){
         //starts running ledger
         boolean ledging = true;
 
@@ -210,7 +196,7 @@ public class LedgerApp {
     }
 
     //displays all transactions
-    public static void allTransactions(Scanner input) throws IOException{
+    public static void allTransactions(Scanner input){
         loadFile();
         System.out.println("All transactions:");
         for (UserTransactions transactions : allUserTransactions){
@@ -219,7 +205,6 @@ public class LedgerApp {
             }
         }
         boolean readingTransactions = true;
-
 
         while (readingTransactions) {
             System.out.println("\nEnter (H) for Main Menu");
@@ -233,11 +218,10 @@ public class LedgerApp {
                 System.out.println("Invalid input—press H to return.");
             }
         }
-
     }
 
     //displays deposits only
-    public static void getAllDeposits()throws IOException{
+    public static void getAllDeposits(){
         loadFile();
         System.out.println("All deposits");
         for (UserTransactions transactions : allUserTransactions) {
@@ -245,11 +229,10 @@ public class LedgerApp {
                 System.out.println("\n" + transactions + "\n");
             }
         }
-
     }
 
     //displays payments only
-    public static void viewPayments()throws IOException{
+    public static void viewPayments(){
         loadFile();
         System.out.println("All Payments");
         for (UserTransactions transactions : allUserTransactions) {
@@ -260,7 +243,7 @@ public class LedgerApp {
     }
 
     //opens reports menu and leaves it running until user goes to ledger and also displays different methods
-    public static void reportsPage(Scanner input)throws IOException{
+    public static void reportsPage(Scanner input){
         boolean reportsRunning = true;
         while (reportsRunning) {
             System.out.println("\nReports Page \nSearch reports by filter:");
@@ -271,7 +254,6 @@ public class LedgerApp {
             System.out.println("(5) Search by Vendor");
             System.out.println("(0) Back");
             String userChoice = input.nextLine().trim();
-
 
             switch (userChoice) {
                 case "1":
@@ -298,33 +280,28 @@ public class LedgerApp {
     }
 
     //displays transactions made from start current month to current date
-    public static void monthToDate()throws IOException{
+    public static void monthToDate(){
         loadFile();
-
-
         LocalDate today = LocalDate.now();
         LocalDate firstOfMonth = today.withDayOfMonth(1);
+        LocalDate lastOfMonth = firstOfMonth.minusDays(1);
         LocalDate tmw = today.plusDays(1);
-
 
         for (UserTransactions transactions : allUserTransactions){
             LocalDate date = transactions.getPurchaseDate();
-            if (date.isAfter(firstOfMonth) && date.isBefore(tmw)){
-                System.out.println("\n" + transactions + "\n");
+            if (date.isAfter(lastOfMonth) && date.isBefore(tmw)){
+                System.out.println(transactions + "\n");
             }
         }
-
     }
 
     //displays all transactions from previous month from day one to end of month
-    public static void previousMonth()throws IOException{
+    public static void previousMonth(){
         loadFile();
-
 
         LocalDate today = LocalDate.now();
         int prevMonth = today.minusMonths(1).getMonthValue();
         int prevMonthInYear = today.minusMonths(1).getYear();
-
 
         System.out.println("\nTransactions from Previous Month:\n");
         for (UserTransactions transactions : allUserTransactions) {
@@ -333,18 +310,15 @@ public class LedgerApp {
                 System.out.println(transactions + "\n");
             }
         }
-
     }
 
     // displays transactions made from beginning of current year to current date
-    public static void yearToDate()throws IOException{
+    public static void yearToDate(){
         loadFile();
-
 
         LocalDate today = LocalDate.now();
         LocalDate firstMOfYear = today.withMonth(1);
         LocalDate tmw = today.plusDays(1);
-
 
         for (UserTransactions transactions : allUserTransactions){
             LocalDate date = transactions.getPurchaseDate();
@@ -352,19 +326,16 @@ public class LedgerApp {
                 System.out.println("\n" + transactions + "\n");
             }
         }
-
     }
 
     //displays all transactions from the previous year from first day of year to last day of the year
-    public static void previousYear()throws IOException{
+    public static void previousYear(){
         loadFile();
-
 
         LocalDate today = LocalDate.now();
         LocalDate prevYear = today.minusYears(1).withMonth(1).withDayOfMonth(1);
         int allDays = prevYear.lengthOfYear();
         LocalDate lastDay = prevYear.withDayOfYear(allDays);
-
 
         for(UserTransactions transactions : allUserTransactions){
             LocalDate date = transactions.getPurchaseDate();
@@ -372,14 +343,12 @@ public class LedgerApp {
                 System.out.println("\n" + transactions + "\n");
             }
         }
-
     }
 
     //displays the transaction connected to the vendor that the user inputs
-    public static void searchByVendor(Scanner input)throws IOException{
+    public static void searchByVendor(Scanner input){
         loadFile();
         boolean searching = true;
-
 
         while(searching){
             System.out.println("Type in Account or Vendor name: ");
@@ -392,7 +361,6 @@ public class LedgerApp {
             System.out.println("\nEnter (H) for Main Menu or Enter any key to continue searching");
             String home = input.nextLine().trim();
 
-
             if (home.equalsIgnoreCase("h")) {
                 System.out.println("Loading Ledger...\n");
                 searching = false;
@@ -404,35 +372,36 @@ public class LedgerApp {
     }
 
     //loads all transactions in from transactions.csv to allUserTransactions list
-    public static void loadFile()throws IOException{
+    public static void loadFile(){
         DateTimeFormatter dFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         DateTimeFormatter tFormat = DateTimeFormatter.ofPattern("hh:mm a");
         allUserTransactions.clear();
-        BufferedReader reader = new BufferedReader(
-                new FileReader("C:\\Users\\manzo\\pluralsight\\Learn_to_Code_Capstones\\AccountLedgerApp\\src\\transactions.csv"));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.trim().isEmpty()) continue;
-            String[] parts = line.split("\\|");
-            // parse each part:
-            LocalDate date = LocalDate.parse(parts[0],dFormat);
-            LocalTime time = LocalTime.parse(parts[1],tFormat);
-            String desc = parts[2];
-            String vendor = parts[3];
-            double amt = Double.parseDouble(parts[4]);
-            UserTransactions transactions = new UserTransactions(date, time, desc, vendor, amt);
-            allUserTransactions.addFirst(transactions);  // newest‐first
+        try(BufferedReader reader = new BufferedReader(new FileReader("src/transactions.csv"))){
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+                String[] parts = line.split("\\|");
+                // parse each part:
+                LocalDate date = LocalDate.parse(parts[0],dFormat);
+                LocalTime time = LocalTime.parse(parts[1],tFormat);
+                String desc = parts[2];
+                String vendor = parts[3];
+                double amt = Double.parseDouble(parts[4]);
+                UserTransactions transactions = new UserTransactions(date, time, desc, vendor, amt);
+                allUserTransactions.addFirst(transactions);  // newest‐first
+            }
+        }catch (IOException e){
+            System.out.println(e.getMessage());
         }
-        reader.close();
     }
 
     //gets all user input from methods and writes it into transaction.csv
     public static void writeTransactions(LocalDate purchaseDate, LocalTime purchaseTime, String description, String vendor, double amount) throws IOException {
-        FileWriter writer = new FileWriter("C:\\Users\\manzo\\pluralsight\\Learn_to_Code_Capstones\\AccountLedgerApp\\src\\transactions.csv", true);
-        UserTransactions newTransaction = new UserTransactions(purchaseDate, purchaseTime, description, vendor, amount);
-        writer.write(" \n" + newTransaction.toString());
-        writer.close();
-        allUserTransactions.addFirst(newTransaction);
+        try( FileWriter writer = new FileWriter("src/transactions.csv", true)){
+            UserTransactions newTransaction = new UserTransactions(purchaseDate, purchaseTime, description, vendor, amount);
+            writer.write(" \n" + newTransaction.toString());
+            allUserTransactions.addFirst(newTransaction);
+        }
     }
 
 }
