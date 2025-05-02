@@ -21,9 +21,8 @@ A console-based Java app that lets users log deposits and payments, view their f
 <details>
 <summary>📸 Screenshots</summary>
 
-![Main Menu](https://raw.githubusercontent.com/yourusername/yourrepo/main/screenshots/main_menu.png)  
-![Deposit Entry](https://raw.githubusercontent.com/yourusername/yourrepo/main/screenshots/deposit.png)  
-![Reports Page](https://raw.githubusercontent.com/yourusername/yourrepo/main/screenshots/reports.png)
+![Main Menu](src/mainmenu.png)  
+![Deposit Entry](src/mainMenuRunning.png)
 
 </details>
 
