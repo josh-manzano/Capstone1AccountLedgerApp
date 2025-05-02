@@ -53,15 +53,6 @@ A console-based Java app that lets users log deposits and payments, view their f
 
 ---
 
-## 🧪 Tap to Run App
-
-```bash
-src/LedgerApp.java
-
-```
-
----
-
 ## Most interesting code piece "writeTransactions();"
 One of my favorite parts of this project was how I 
 kept my transactions organized from newest to oldest. Instead of sorting later, 
