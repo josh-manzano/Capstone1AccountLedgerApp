@@ -81,19 +81,6 @@ It made the logic clean, simple, and efficient. One small method handled everyth
 
 ---
 
-<details>
-<summary>📸 Screenshot of Main Menu code and its output in terminal </summary>
-
-~Scroll down to see more~
-
-![mainMenu();](src/mainmenu.png)
-
-![Main menu running](src/mainMenuRunning.png)
-
-</details>
-
----
-
 
 ## 👤 Author
 
