@@ -13,7 +13,7 @@ public class LedgerApp {
     static List<UserTransactions> allUserTransactions = new ArrayList<>();
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
-        System.out.println("-------------------Welcome to the Account Ledger App-------------------");
+        System.out.println("----------------Account Ledger App----------------");
         mainMenu(input);
     }
     // keeps code running while its true also allows user to select methods
@@ -24,6 +24,7 @@ public class LedgerApp {
         //keeps the app running unless they type X to exit and turn off the app
         while (running) {
             //Main Menu options
+            System.out.println("\n~Main Menu~");
             System.out.println("Select an option below; type the corresponding letter");
             System.out.println("(D) Add Deposit\n(P) Make Payment (Debit)\n(L) Ledger\n(X) Exit");
 
@@ -32,15 +33,13 @@ public class LedgerApp {
             //checks which option the user input and opens runs that method, if they input something invalid it
             switch (userChoice.toLowerCase()) {
                 case "d": //opens deposit method
-                    System.out.println("You chose D");
                     addDeposit(input);
                     break;
                 case "p": //opens payment method
-                    System.out.println("You chose P");
                     makePayment(input);
                     break;
                 case "l": //opens ledger method
-                    System.out.println("You chose L");
+                    System.out.println("\n~Ledger Menu~");
                     openLedger(input);
                     break;
                 case "x": //closes app
@@ -243,7 +242,7 @@ public class LedgerApp {
     public static void reportsPage(Scanner input){
         boolean reportsRunning = true;
         while (reportsRunning) {
-            System.out.println("\nReports Page \nSearch reports by filter:");
+            System.out.println("\n~Reports Page~\nSearch reports by filter:");
             System.out.println("(1) Month to Date");
             System.out.println("(2) Previous Month");
             System.out.println("(3) Year to Date");
@@ -267,8 +266,10 @@ public class LedgerApp {
                     break;
                 case "5":
                     searchByVendor(input);
+                    break;
                 case "0":
                     reportsRunning = false;
+                    break;
                 default:
                     System.out.println("Invalid, try again");
             }

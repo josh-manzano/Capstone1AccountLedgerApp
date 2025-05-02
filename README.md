@@ -59,12 +59,50 @@ A console-based Java app that lets users log deposits and payments, view their f
 src/LedgerApp.java
 
 ```
+
+---
+
+## Most interesting code piece "writeTransactions();"
+One of my favorite parts of this project was how I 
+kept my transactions organized from newest to oldest. Instead of sorting later, 
+I handled it as I added data.
+
+<details>
+<summary>📸 Screenshot of writeTransactions();</summary>
+
+![writeTransactions method](src/writeTransactions.png)
+
+</details>
+
+#### What it does:
+
+- it writes a transaction to the CSV file so it’s saved permanently.
+- Then, it uses addFirst() to place that transaction at the top of the list.
+  That way, when I later display transactions using a for loop, they naturally print from newest to oldest, just like the project asked no reversing needed later.
+
+
+#### Why I like it:
+It made the logic clean, simple, and efficient. One small method handled everything in order, and it saved me from having to mess with sorting during output.
+
 ---
 
 ##  Example CSV Format
 
 - 04-30-2025|02:36 PM|Paycheck|Acme Corp| 1500.00
 - 04-30-2025|02:42 PM|Cash|Ken| 342.00
+
+---
+
+<details>
+<summary>📸 Screenshot of Main Menu code and its output in terminal </summary>
+
+~Scroll down to see more~
+
+![mainMenu();](src/mainmenu.png)
+
+![Main menu running](src/mainMenuRunning.png)
+
+</details>
 
 ---
 
