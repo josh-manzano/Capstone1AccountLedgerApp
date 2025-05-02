@@ -20,7 +20,6 @@ public class LedgerApp {
     public static void mainMenu(Scanner input){
         //app is in action
         boolean running = true;
-
         //keeps the app running unless they type X to exit and turn off the app
         while (running) {
             //Main Menu options

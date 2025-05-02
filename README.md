@@ -53,26 +53,24 @@ A console-based Java app that lets users log deposits and payments, view their f
 
 ---
 
-## Most interesting code piece "writeTransactions();"
-One of my favorite parts of this project was how I 
-kept my transactions organized from newest to oldest. Instead of sorting later, 
-I handled it as I added data.
+## 💾 Most interesting code piece: loadFile();
+One of the parts I’m proud of in this project is how I load and rebuild my transactions list cleanly from the CSV file every time the app runs.
 
 <details>
-<summary>📸 Screenshot of writeTransactions();</summary>
+<summary>📸 Screenshot of loadFile();</summary>
 
-![writeTransactions method](src/writeTransactions.png)
+![writeTransactions method](src/loadFile().png)
 
 </details>
 
-#### What it does:
+#### 🔍 What it does::
 
-- it writes a transaction to the CSV file so it’s saved permanently.
-- Then, it uses addFirst() to place that transaction at the top of the list.
-  That way, when I later display transactions using a for loop, they naturally print from newest to oldest, just like the project asked no reversing needed later.
+- It reads each line from transactions.csv using a BufferedReader.
+- It splits the line using | to get all the transaction data.
+- Builds a UserTransactions object and adds it to the list using addFirst().
 
 
-#### Why I like it:
+#### ⭐ Why I like it:
 It made the logic clean, simple, and efficient. One small method handled everything in order, and it saved me from having to mess with sorting during output.
 
 ---
