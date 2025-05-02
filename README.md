@@ -1,4 +1,4 @@
-# LedgerXProject
+# Ledger Application Project
 
 A console-based Java app that lets users log deposits and payments, view their full transaction history, and filter through detailed reports.
 

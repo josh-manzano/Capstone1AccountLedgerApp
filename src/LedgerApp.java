@@ -386,7 +386,7 @@ public class LedgerApp {
                 String vendor = parts[3];
                 double amt = Double.parseDouble(parts[4]);
                 UserTransactions transactions = new UserTransactions(date, time, desc, vendor, amt);
-                allUserTransactions.addFirst(transactions);  // newest‐first
+                allUserTransactions.addFirst(transactions);  // writes lines from newest to oldest
             }
         }catch (IOException e){
             System.out.println(e.getMessage());
@@ -397,8 +397,8 @@ public class LedgerApp {
     public static void writeTransactions(LocalDate purchaseDate, LocalTime purchaseTime, String description, String vendor, double amount) throws IOException {
         try( FileWriter writer = new FileWriter("src/transactions.csv", true)){
             UserTransactions newTransaction = new UserTransactions(purchaseDate, purchaseTime, description, vendor, amount);
-            writer.write(" \n" + newTransaction.toString());
-            allUserTransactions.addFirst(newTransaction);
+            writer.write(" \n" + newTransaction);
+            allUserTransactions.add(newTransaction);
         }
     }
 
