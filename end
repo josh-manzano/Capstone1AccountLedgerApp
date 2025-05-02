@@ -1,0 +1,63 @@
+[33mcommit 9ed8e076cbff743288eccc190d5a4c1c4b8571e3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Thu May 1 09:46:28 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    created the vendor method that filters transactions based on the vendor name/user input and added getter for vendor. Testing went well
+
+[33mcommit 279bdcdf65318f1b6aba8257fa39f5e17dc4af94[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Wed Apr 30 13:02:41 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    finished most methods for reports page and did some testing
+
+[33mcommit 8aba3be35150f11ad9dfacb73838be2181cf12ca[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Tue Apr 29 11:39:56 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    added a purchaseDate getter in object class for monthToDate method and completed the method
+
+[33mcommit 88053551278c32fd12be064b860620092a4d9144[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Tue Apr 29 09:23:04 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    finished rest of ledger methods payment and deposit, also added a getter to filter the two ledger methods, started reports page
+
+[33mcommit 2fc20495aab2c8ac2ce95638c85038e2d8956205[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Mon Apr 28 14:11:37 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    added ledger menu, created loadFile method, and allTransactions method to display the transactions
+
+[33mcommit c2aa84d3562365e0de78903c984a3afbe53c829c[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Mon Apr 28 12:45:22 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    created methods for deposit and payment pages, and file writer to write down transactions into csv
+
+[33mcommit 4149cffb19e2d3f5ed8fb864d564445208cbd7b8[m
+Author:     Josh M <manzojosh27@gmail.com>
+AuthorDate: Mon Apr 28 09:00:00 2025 -0700
+Commit:     Josh M <manzojosh27@gmail.com>
+CommitDate: Wed Apr 30 19:03:21 2025 -0700
+
+    Ledger project first entry: created csv file, objects class for transactions, draft of main menu
+
+[33mcommit e0483e364d8748f3f1bb45d43217fdc87387bf09[m
+Author:     josh-manzano <joshmanzo27@gmail.com>
+AuthorDate: Fri Apr 25 14:19:39 2025 -0700
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 25 14:19:39 2025 -0700
+
+    Initial commit
