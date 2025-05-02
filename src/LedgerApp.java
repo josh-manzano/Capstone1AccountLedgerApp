@@ -55,52 +55,49 @@ public class LedgerApp {
 
     //allows the user to deposit money into their account
     public static void addDeposit(Scanner input){
-        boolean depositRunning = true;
+        boolean running = true;
 
-        while (depositRunning) {
+        while (running) {
+            System.out.println("Would you like to deposit?");
+            System.out.println("Choose: (Y) Continue or (N) Go back to main menu");
+            String yOrN = input.nextLine().trim().toLowerCase();
 
-            System.out.println("Would you like to deposit?\nChoose: (Y) Continue or (N) Go back to main menu");
-            String yOrN = input.nextLine().trim();
+            if (yOrN.equals("y")) {
+                System.out.println("Which account would you like to deposit to?");
+                String account = input.nextLine();
 
-            //asks user if they want to deposit or not
-            switch (yOrN.toLowerCase()) {
-                case "y":
-                    //asking how much to deposit
-                    System.out.println("Which account would you like to deposit to?\nex: Sydney Sweeney, Ken Carson\n");
-                    String account = input.nextLine();
-                    System.out.println("How will you be depositing today?\nex: Paycheck, Bank Transfer, Cash\n");
-                    String paymentMethod = input.nextLine();
-                    System.out.println("How much would you like to deposit?\n");
-                    double depositAmount = input.nextDouble();
-                    input.nextLine();
-                    System.out.println("\nYou are about to deposit $" + String.format("%.2f", depositAmount) + " using " + paymentMethod + "\nChoose: (Y) Continue or (N) Cancel");
-                    String yOrNToDeposit = input.nextLine().trim();
+                System.out.println("How will you be depositing today?");
+                String paymentMethod = input.nextLine();
 
-                    //asks user if they want to continue the deposit or cancel
-                    switch (yOrNToDeposit.toLowerCase()) {
-                        case "y":
-                            System.out.println("$" + String.format("%.2f", depositAmount) + " has been deposited into your account.\nReturning to the main menu ... \n");
-                            try {
-                                writeTransactions(LocalDate.now(), LocalTime.now(), paymentMethod, account, depositAmount);
-                            } catch (IOException e) {
-                                System.out.println("Transaction failed, Please try again.");
-                            }
-                            depositRunning = false;
-                            break;
-                        case "n":
-                            System.out.println("Deposit has been canceled \nReturning to the main menu ...\n");
-                            depositRunning = false;
-                            break;
-                        default:
-                            System.out.println("Invalid try again \n");
+                System.out.println("How much would you like to deposit?");
+                double depositAmount = input.nextDouble();
+                input.nextLine();
+
+                System.out.println("You are about to deposit $" + String.format("%.2f", depositAmount) + " using " + paymentMethod);
+                System.out.println("Choose: (Y) Continue or (N) Cancel");
+                String confirm = input.nextLine().trim().toLowerCase();
+
+                if (confirm.equals("y")) {
+                    System.out.println("$" + String.format("%.2f", depositAmount) + " has been deposited into your account.");
+                    try {
+                        writeTransactions(LocalDate.now(), LocalTime.now(), paymentMethod, account, depositAmount);
+                    } catch (IOException e) {
+                        System.out.println("Transaction failed, Please try again.");
                     }
-                    break;
-                case "n":
-                    depositRunning = false;
-                    System.out.println("Deposit has been canceled.\nReturning to main menu..\n");
-                    break;
-                default:
-                    System.out.println("Invalid try again \n");
+                    running = false;
+                } else if (confirm.equals("n")) {
+                    System.out.println("Deposit has been canceled.");
+                    running = false;
+                } else {
+                    System.out.println("Invalid input, try again.");
+                }
+
+            } else if (yOrN.equals("n")) {
+                System.out.println("Deposit has been canceled. Returning to main menu...");
+                running = false;
+
+            } else {
+                System.out.println("Invalid input, try again.");
             }
         }
     }
